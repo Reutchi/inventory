@@ -1,0 +1,20 @@
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  .avatar{
+    max-width: unset;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+  }
+}
