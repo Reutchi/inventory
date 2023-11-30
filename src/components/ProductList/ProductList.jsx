@@ -8,6 +8,8 @@ const ProductList = ({ products }) => {
     const dispatch = useDispatch();
     const [localQuantity, setLocalQuantity] = useState({});
 
+
+
     const handleSellInputChange = (productId, event) => {
         const quantity = parseInt(event.target.value, 10) || 0;
         setLocalQuantity((prevLocalQuantity) => ({
@@ -17,14 +19,12 @@ const ProductList = ({ products }) => {
     };
 
     const handleSellAllProducts = () => {
-        // Trimite o acțiune pentru fiecare produs în parte
         Object.keys(localQuantity).forEach((productId) => {
             const quantity = localQuantity[productId] || 0;
             dispatch(SET_QUANTITY_SOLD({ id: parseInt(productId, 10), quantity }));
             dispatch(SELL_PRODUCT({ id: parseInt(productId, 10), quantity }));
         });
 
-        // Resetează localQuantity
         setLocalQuantity({});
     };
 
@@ -66,6 +66,8 @@ const ProductList = ({ products }) => {
                 <Button onClick={handleSellAllProducts} title='Vinde Toate' />
                 <Button onClick={handleOpenModal} title='Adauga un produs' />
             </div>
+
+
         </div>
     );
 };
