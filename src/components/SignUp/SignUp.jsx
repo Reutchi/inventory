@@ -8,7 +8,9 @@ import {useNavigate} from "react-router-dom";
 const SignUp = ({title = 'E timpul să te simți ca acasă'}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {  registerForm, avatarUrl ,} = useSelector((state) => state.auth);
+    const {  registerForm, avatarUrl , token} = useSelector((state) => state.auth);
+
+    localStorage.setItem('token',token)
 
     const handleInput = useCallback(({ key, value }) => {
         dispatch(HANDLE_FORM({ key, value }));

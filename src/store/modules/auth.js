@@ -8,6 +8,7 @@ const initialState = {
         password:'',
         email:'',
     },
+    token:'',
     avatarUrl: '',
     avatar : NoAvatar,
     isSignUp: false,
@@ -44,6 +45,12 @@ export const auth = createSlice({
         TOGGLE_SIGNUP(state){
             state.isSignUp = !state.isSignUp
         },
+        SET_TOKEN(state,action){
+          state.token = action.payload
+        },
+        LOGOUT(state){
+          state.token = ''
+        },
         CHANGE_AVATAR(state,action) {
             const {imageURL,imageFile} = action.payload
             state.avatar = imageURL
@@ -55,11 +62,13 @@ export const auth = createSlice({
 
 
 export const userRegister = function (userData,navigate) {
-    return async function (dispatch,state) {
+    return async function (dispatch) {
         try {
-            const url = 'http://localhost:3000/register'
+            const url = 'http://localhost:3002/register'
             const response = await axios.post(url,userData)
-            response.status === 200 && navigate('/')
+            response.status === 201 && navigate('/')
+            const token = response.data.token
+            dispatch(SET_TOKEN(token))
         } catch (err) {
             console.log(err)
         }
@@ -67,18 +76,20 @@ export const userRegister = function (userData,navigate) {
 }
 
 export const userLogin = function (userData,navigate) {
-    return async function () {
+    return async function (dispatch) {
         try {
-            const url = 'http://localhost:3000/login'
+            const url = 'http://localhost:3002/login'
             const response = await axios.post(url,userData)
             response.status ===  200 && navigate('/')
+            const token = response.data.token
+            dispatch(SET_TOKEN(token))
         } catch (err) {
             console.log(err)
         }
     }
 }
 
-export const {TOGGLE_SIGNUP,HANDLE_FORM,CHANGE_AVATAR,SIGN_IN} = auth.actions;
+export const {TOGGLE_SIGNUP,HANDLE_FORM,CHANGE_AVATAR,SIGN_IN,SET_TOKEN} = auth.actions;
 
 export default auth.reducer;
 

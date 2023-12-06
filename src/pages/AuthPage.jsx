@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { TOGGLE_SIGNUP } from "../store/modules/auth"
-import './css/auth.scss'
-import {SignIn,SignUp} from '../components/index'
+import "./css/auth.scss"
+import {SignIn,SignUp} from "../components/index"
 
 const AuthPage = () => {
 
