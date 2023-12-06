@@ -176,6 +176,7 @@ label {
   width: 260px;
   margin: 25px auto 0;
   text-align: center;
+  margin-bottom: 10px;
 }
 label span {
   font-size: 12px;
@@ -209,9 +210,6 @@ input {
   color: #455a81;
 }
 
-.sign-in {
-  transition-timing-function: ease-out;
-}
 .cont.s--signup .sign-in {
   transition-timing-function: ease-in-out;
   transition-duration: 1.2s;
