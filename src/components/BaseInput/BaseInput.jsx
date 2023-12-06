@@ -1,6 +1,6 @@
 import React from "react";
 
-const BaseInput = ({length,label = '',id, name,type = '',placeholder = '',onInput = () => {}}) => {
+const BaseInput = ({required,length,label = '',id, name,type = '',placeholder = '',onInput = () => {}}) => {
     const handleInput = (value) => {
         onInput({key:name,value})
     }
@@ -9,6 +9,7 @@ const BaseInput = ({length,label = '',id, name,type = '',placeholder = '',onInpu
         <label htmlFor={id || name}>
             <span>{label}</span>
             <input
+                required
                 minLength={length}
                 onInput={ev => handleInput(ev.target.value)}
                 placeholder={placeholder}

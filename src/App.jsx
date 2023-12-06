@@ -1,13 +1,11 @@
-import './App.scss'
-import {Home,About,AuthPage} from './pages/index'
+import {Home,AuthPage} from './pages/index'
 import {Outlet, Route, Routes,Link} from "react-router-dom";
 
 const App = () => {
 
     const routes = [
         { id: 1, element: <Home />, path: '/home', title: 'Home' },
-        { id: 2, element: <About />, path: '/about', title: 'About' },
-        { id: 3, element: <AuthPage />, path: '/auth', title: 'Auth' },
+        { id: 2, element: <AuthPage />, path: '/auth', title: 'Auth' },
     ];
 
     function Layout() {
