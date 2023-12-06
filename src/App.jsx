@@ -1,40 +1,28 @@
-import {Home,AuthPage} from './pages/index'
-import {Outlet, Route, Routes,Link} from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from '../src/components/PrivateRoute/PrivateRoute';
+import { router } from './router/index';
 
-const App = () => {
-
-    const routes = [
-        { id: 1, element: <Home />, path: '/home', title: 'Home' },
-        { id: 2, element: <AuthPage />, path: '/auth', title: 'Auth' },
-    ];
-
-    function Layout() {
-        return (
-            <div>
-                <nav>
-                    <ul>
-                        {routes.map(({ id, path, title }) => (
-                            <li key={id}>
-                                <Link to={path}>{title}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-                <hr />
-                <Outlet />
-            </div>
-        );
-    }
-
+function App() {
     return (
         <Routes>
-            <Route path="/" element={<Layout />}>
-            </Route>
-            {routes.map(({ id, element, path }) => (
-                <Route key={id} path={path} element={element} />
-            ))}
+            {router.map(({ auth, path, element }, idx) =>
+                auth ? (
+                    <Route
+                        key={idx}
+                        path={path}
+                        element={
+                            <PrivateRoute>
+                                {element}
+                            </PrivateRoute>
+                        }
+                    />
+                ) : (
+                    <Route key={idx} path={path} element={element} />
+                )
+            )}
         </Routes>
-    )
-};
+    );
+}
 
 export default App;
