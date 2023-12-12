@@ -1,4 +1,3 @@
-import React from "react";
 
 const BaseInput = ({required,length,label = '',id, name,type = '',placeholder = '',onInput = () => {}}) => {
     const handleInput = (value) => {

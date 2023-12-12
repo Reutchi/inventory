@@ -15,26 +15,26 @@ const AuthPage = () => {
 
     return (
         <section className='auth-section'>
-                <div className={`cont ${isSignUp ? 's--signup' : ''}`}>
-                    <SignIn/>
-                    <div className="sub-cont">
-                        <div className="img">
-                            <div className="img__text m--up">
-                            </div>
-                            <div className="img__text m--up">
-                                <p>Aventura Gustului: Împărtășește Pasiunea lui Roman Batin</p>
-                            </div>
-                            <div className="img__text m--in">
-                                <p>Control Total, Eficiență Maximă: Aplicația Noastră pentru Inventariere, Soluția Ta Instant!</p>
-                            </div>
-                            <div onClick={() => toggleSignUp()} className="img__btn">
-                                <span  className="m--up">Înregistrare</span>
-                                <span  className="m--in">Autentificare</span>
-                            </div>
+            <div className={`cont ${isSignUp ? 's--signup' : ''}`}>
+                <SignIn/>
+                <div className="sub-cont">
+                    <div className="img">
+                        <div className="img__text m--up">
                         </div>
-                        <SignUp/>
+                        <div className="img__text m--up">
+                            <p>Aventura Gustului: Împărtășește Pasiunea lui Roman Batin</p>
+                        </div>
+                        <div className="img__text m--in">
+                            <p>Control Total, Eficiență Maximă: Aplicația Noastră pentru Inventariere, Soluția Ta Instant!</p>
+                        </div>
+                        <div onClick={() => toggleSignUp()} className="img__btn">
+                            <span  className="m--up">Înregistrare</span>
+                            <span  className="m--in">Autentificare</span>
+                        </div>
                     </div>
+                    <SignUp/>
                 </div>
+            </div>
         </section>
     )
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from '../src/components/PrivateRoute/PrivateRoute';
 import { router } from './router/index';
+import './styles/base.scss'
+import './styles/typography.scss'
 
 function App() {
     return (

@@ -1,6 +1,8 @@
 const Home = () => {
-    return (
-        <div>Home</div>
+     return (
+        <div>Bine ai revenit
+            <button>CLICK</button>
+        </div>
     )
 }
 export default Home

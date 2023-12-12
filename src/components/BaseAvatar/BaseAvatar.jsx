@@ -7,13 +7,13 @@ const BaseAvatar = ({name = '', }) => {
     const handleChangeAvatar = (ev) => {
         const files = ev.target.files
         const imageFile = files[0]
-        const imageURL = URL.createObjectURL(imageFile)
 
-        dispatch(CHANGE_AVATAR({imageURL, imageFile}))
+        dispatch(CHANGE_AVATAR({imageFile}))
     }
-
     const dispatch = useDispatch()
-    const {avatar} = useSelector((state) => state.auth)
+
+    const {avatarUrl} = useSelector((state) => state.auth)
+    console.log(avatarUrl)
 
     return (
         <label className="custom-file-upload">
@@ -22,7 +22,7 @@ const BaseAvatar = ({name = '', }) => {
                 onInput={ev => handleChangeAvatar(ev)}
                 type="file"
                 accept="image/*" />
-            <img className='avatar' src={avatar} alt="avatar"/>
+            <img className='avatar' src={avatarUrl} alt="avatar"/>
         </label>
     )
 }

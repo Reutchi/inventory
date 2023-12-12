@@ -1,96 +1,114 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import NoAvatar from '../../assets/NoAvatar.svg'
-import axios from "axios";
 
-const initialState = {
-    registerForm :{
-        name:'',
-        password:'',
-        email:'',
-    },
-    token:'',
-    avatarUrl: '',
-    avatar : NoAvatar,
-    isSignUp: false,
-    signInForm: {
-        email:'',
-        password:'',
+export const registerUser = createAsyncThunk(
+    'auth/register',
+    async ({ nickname, email, password }, { rejectWithValue }) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const response = await axios.post(
+                'http://localhost:3002/auth/signup/',
+                { nickname, email, password },
+                config
+            );
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
     }
-};
+);
 
-export const auth = createSlice({
+export const userLogin = createAsyncThunk(
+    'auth/login',
+    async ({ email, password }, { rejectWithValue }) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            const { data } = await axios.post(
+                `http://localhost:3002/auth/login`,
+                { email, password },
+                config
+            )
+            // store user's token in local storage
+            localStorage.setItem('role', data.role)
+            return data
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
+
+const authSlice = createSlice({
     name: 'auth',
-    initialState,
+    initialState: {
+        isSignUp: false,
+        loading: false,
+        userInfo: {},
+        authenticated: false,
+        error: null,
+        success: false,
+    },
     reducers: {
         HANDLE_FORM(state, action) {
-            const { key, value } = action.payload;
-            const updatedRegisterForm = { ...state.registerForm };
-            updatedRegisterForm[key] = value;
-
-            return {
-                ...state,
-                registerForm: updatedRegisterForm,
-            };
+            const { key, value, formKey } = action.payload;
+            state.forms[formKey][key] = value;
         },
-        SIGN_IN(state,action) {
-          const {key,value} = action.payload
-          const updateSignInForm = {...state.signInForm}
-          updateSignInForm[key] = value;
-
-          return{
-              ...state,
-              signInForm: updateSignInForm
-          }
+        TOGGLE_SIGNUP(state) {
+            state.isSignUp = !state.isSignUp;
         },
-        TOGGLE_SIGNUP(state){
-            state.isSignUp = !state.isSignUp
-        },
-        SET_TOKEN(state,action){
-          state.token = action.payload
-        },
-        LOGOUT(state){
-          state.token = ''
-        },
-        CHANGE_AVATAR(state,action) {
-            const {imageURL,imageFile} = action.payload
-            state.avatar = imageURL
-            state.avatarUrl = imageFile
-        }
+        // CHANGE_AVATAR(state, action) {
+        //     const { imageFile } = action.payload;
+        //     state.avatarUrl = URL.createObjectURL(imageFile)
+        // },
+    },
+    extraReducers: (builder) => {
+        builder
+            // Register
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+                state.authenticated = true;
+            })
+            .addCase(registerUser.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            })
+            // Login
+            .addCase(userLogin.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(userLogin.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.userInfo = payload;
+                state.authenticated = true;
+            })
+            .addCase(userLogin.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
     },
 });
 
-
-
-export const userRegister = function (userData,navigate) {
-    return async function (dispatch) {
-        try {
-            const url = 'http://localhost:3002/register'
-            const response = await axios.post(url,userData)
-            response.status === 201 && navigate('/')
-            const token = response.data.token
-            dispatch(SET_TOKEN(token))
-        } catch (err) {
-            console.log(err)
-        }
-    }
-}
-
-export const userLogin = function (userData,navigate) {
-    return async function (dispatch) {
-        try {
-            const url = 'http://localhost:3002/login'
-            const response = await axios.post(url,userData)
-            response.status ===  200 && navigate('/')
-            const token = response.data.token
-            dispatch(SET_TOKEN(token))
-        } catch (err) {
-            console.log(err)
-        }
-    }
-}
-
-export const {TOGGLE_SIGNUP,HANDLE_FORM,CHANGE_AVATAR,SIGN_IN,SET_TOKEN} = auth.actions;
-
-export default auth.reducer;
-
-
+export const { TOGGLE_SIGNUP, HANDLE_FORM, CHANGE_AVATAR } = authSlice.actions;
+export default authSlice.reducer;
