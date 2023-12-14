@@ -1,7 +1,7 @@
 import './button.scss'
-function Button({title ='', onClick = () => {},type = ''}) {
+function Button({title ='', onClick = () => {},type = '',className}) {
     return (
-        <button className='btn-primary' onClick={onClick}>{title}</button>
+        <button className={className} onClick={onClick}>{title}</button>
     )
 }
 

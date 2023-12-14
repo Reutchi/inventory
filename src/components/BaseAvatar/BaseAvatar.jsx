@@ -1,19 +1,17 @@
 import './base-avatar.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {CHANGE_AVATAR} from "../../store/modules/auth";
-
+// import {SET_AVATAR} from "../../store/modules/auth";
+import NoAvatar  from '../../assets/NoAvatar.svg'
 const BaseAvatar = ({name = '', }) => {
 
+    const dispatch = useDispatch()
     const handleChangeAvatar = (ev) => {
         const files = ev.target.files
         const imageFile = files[0]
-
-        dispatch(CHANGE_AVATAR({imageFile}))
+        // dispatch(SET_AVATAR(imageFile))
     }
-    const dispatch = useDispatch()
 
-    const {avatarUrl} = useSelector((state) => state.auth)
-    console.log(avatarUrl)
+    const {avatar} = useSelector((state) => state.auth)
 
     return (
         <label className="custom-file-upload">
@@ -22,7 +20,7 @@ const BaseAvatar = ({name = '', }) => {
                 onInput={ev => handleChangeAvatar(ev)}
                 type="file"
                 accept="image/*" />
-            <img className='avatar' src={avatarUrl} alt="avatar"/>
+            <img className='avatar' src={avatar === null ? NoAvatar : avatar } alt="avatar"/>
         </label>
     )
 }
