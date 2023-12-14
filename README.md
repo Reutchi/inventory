@@ -1,3 +1,5 @@
+<img width="1240" alt="Captură de ecran din 2023-12-14 la 16 07 07" src="https://github.com/Reutchi/inventory-kitchen/assets/104528541/cd774647-c16c-47e2-b134-3404894a23ba">
+
 🌟 Welcome to OptiStock: Your Complete Inventory Solution! 🌟
 
 Revolutionize your restaurant or hotel operations with our state-of-the-art Inventory Management App. We've crafted a seamless experience to simplify supply chain processes and elevate your inventory management game in the dynamic world of hospitality.
