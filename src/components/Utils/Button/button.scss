@@ -6,3 +6,15 @@
   color: #fff;
   cursor: pointer;
 }
+
+.btn-transparent{
+  border: 1px solid #fff;
+  position: relative;
+  width: 120px;
+  height: 36px;
+  margin: 0 auto;
+  background: transparent;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+}
